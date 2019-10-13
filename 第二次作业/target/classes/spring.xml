@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+   <!-- <bean id="meettingServiceImpl" class="com.zut.Service.Impl.MeettingServiceImpl"/>-->
+
+    <!--自动扫描-->
+    <context:component-scan base-package="com.zut"/>
+
+<!--初始化汽车类-->
+    <bean id="car1" class="com.zut.Util.Car">
+        <property name="brand" value="奔驰"/>
+        <property name="color" value="黑色"/>
+        <property name="displacement" value="666.6"/>
+    </bean>
+
+    <bean id="car2" class="com.zut.Util.Car">
+        <property name="brand" value="奥迪"/>
+        <property name="color" value="黑色"/>
+        <property name="displacement" value="777.7"/>
+    </bean>
+
+    <bean id="car3" class="com.zut.Util.Car">
+        <property name="brand" value="宝马"/>
+        <property name="color" value="黑色"/>
+        <property name="displacement" value="888.8"/>
+    </bean>
+<!--初始化老板类-->
+    <bean id="boss1" class="com.zut.Util.Boss">
+        <property name="car" ref="car1"/>
+        <property name="company" value="中原工学院"/>
+        <property name="name" value="老板王"/>
+        <property name="hobby" value="学习"/>
+    </bean>
+
+    <bean id="boss2" class="com.zut.Util.Boss">
+        <property name="car" ref="car2"/>
+        <property name="company" value="中原工学院"/>
+        <property name="name" value="老板黄"/>
+        <property name="hobby" value="学习"/>
+    </bean>
+
+    <bean id="boss3" class="com.zut.Util.Boss">
+        <property name="car" ref="car3"/>
+        <property name="company" value="中原工学院"/>
+        <property name="name" value="老板李"/>
+        <property name="hobby" value="学习"/>
+    </bean>
+
+    <!--初始化meetting类-->
+
+    <bean id="meetting" class="com.zut.Util.Meetting">
+        <property name="theme" value="中原工学院软件学院卓越171学习大会"/>
+        <property name="list">
+            <list>
+                <ref bean="boss1"/>
+                <ref bean="boss2"/>
+                <ref bean="boss3"/>
+            </list>
+        </property>
+    </bean>
+</beans>
