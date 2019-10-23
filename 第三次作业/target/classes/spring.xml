@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:conetxt="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       https://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--注释-->
+    <conetxt:component-scan base-package="com.zut.hjz"/>
+
+    <!--开启aop配置-->
+    <aop:aspectj-autoproxy/>
+
+    <!--普通配置-->
+    <!--<bean id="accountservice" class="com.zut.hjz.Impl.AccountServiceImpl"/>
+
+    <bean id="logger" class="com.zut.hjz.Logger.Logger"/>
+
+    <aop:config>
+        &lt;!&ndash;配置切面&ndash;&gt;
+        <aop:aspect id="logAdvice" ref="logger">
+            <aop:pointcut id="pt" expression="execution(* com.zut.hjz.Impl.*.*(..))"/>
+            <aop:around method="aroundprintlog" pointcut-ref="pt"/>
+        </aop:aspect>
+    </aop:config>-->
+</beans>
