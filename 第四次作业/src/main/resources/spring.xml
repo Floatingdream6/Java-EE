@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.zut"/>
+
+    <context:property-placeholder location="classpath:jdbc.properties" />
+
+    <!--配置数据源-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+    </bean>
+
+    <!--事务管理相关-->
+
+    <!--配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置事物的通知-->
+    <tx:advice id="txadvice" transaction-manager="transactionManager">
+        <!--配置事务的属性-->
+        <tx:attributes>
+            <tx:method name="*" read-only="false" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <!--配置切入点表达式-->
+        <aop:pointcut id="pt" expression="execution(* com.zut.Service.Impl.*ServiceImpl.*(..))"/>
+        <!--建立切入点表达式和事务的关系-->
+        <aop:advisor advice-ref="txadvice" pointcut-ref="pt"/>
+    </aop:config>
+
+    <!--注解配置事务管理器-->
+    <!--开启Spring对注解事务的支持-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
